@@ -31,10 +31,6 @@ suspend fun haha() {
             var thisChat = getChat(it.chat).extendedSupergroupChatOrThrow()
             println("thisChat ---- $thisChat")
 
-            // getting id of current chat
-            var idOfCurrentChat = thisChat?.id
-            println("idOfCurrentChat ---- $idOfCurrentChat")
-
             // getting id of linked chat
             var idOfChannelFromGroup = thisChat?.linkedChannelChatId!!
             println("idOfChannelFromGroup ---- $idOfChannelFromGroup")
