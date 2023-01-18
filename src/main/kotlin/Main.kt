@@ -1,9 +1,13 @@
 import dev.inmo.tgbotapi.bot.ktor.telegramBot
 import dev.inmo.tgbotapi.extensions.api.chat.get.getChat
+import dev.inmo.tgbotapi.extensions.api.send.copyMessage
 import dev.inmo.tgbotapi.extensions.api.send.sendMessage
 import dev.inmo.tgbotapi.extensions.behaviour_builder.buildBehaviourWithLongPolling
 import dev.inmo.tgbotapi.extensions.behaviour_builder.triggers_handling.onCommand
 import dev.inmo.tgbotapi.extensions.utils.extendedSupergroupChatOrThrow
+import dev.inmo.tgbotapi.requests.ForwardMessage
+
+val bot = telegramBot("TOKEN")
 
 suspend fun main() {
     haha()
@@ -11,7 +15,6 @@ suspend fun main() {
 }
 
 suspend fun haha() {
-    val bot = telegramBot("5896153553:AAGgTDtZU22IGsV_nSpGMXwct93d8BO1fss")
     bot.buildBehaviourWithLongPolling {
         onCommand("say") {
 
@@ -19,10 +22,14 @@ suspend fun haha() {
             val thisChat = getChat(it.chat).extendedSupergroupChatOrThrow()
             println("thisChat ---- $thisChat")
 
+            val ttttis = thisChat.id
+
             // getting id of linked chat
             val idOfChannelFromGroup = thisChat.linkedChannelChatId!!
             println("idOfChannelFromGroup ---- $idOfChannelFromGroup")
 
+            ForwardMessage(idOfChannelFromGroup, ttttis,   )
+//            copyMessage(idOfChannelFromGroup, it,  )
             sendMessage(idOfChannelFromGroup, "hahaha")
 
         }
