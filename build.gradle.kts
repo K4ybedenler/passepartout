@@ -10,11 +10,12 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+    maven(url = "https://git.inmo.dev/api/packages/InsanusMokrassar/maven")
 }
 
 dependencies {
     // type-safe library for tg-bot API
-    implementation("dev.inmo:tgbotapi:5.1.0")
+    implementation("dev.inmo:tgbotapi:6.0.2-branch_6.0.2-build1488")
 
     testImplementation(kotlin("test"))
 }
