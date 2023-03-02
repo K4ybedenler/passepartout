@@ -9,6 +9,8 @@ import dev.inmo.tgbotapi.extensions.behaviour_builder.buildBehaviourWithLongPoll
 import dev.inmo.tgbotapi.extensions.behaviour_builder.triggers_handling.onContentMessage
 import dev.inmo.tgbotapi.extensions.utils.extendedSupergroupChatOrNull
 import dev.inmo.tgbotapi.extensions.utils.extensions.raw.caption
+import dev.inmo.tgbotapi.extensions.utils.extensions.raw.from
+import dev.inmo.tgbotapi.extensions.utils.shortcuts.executeAsync
 import dev.inmo.tgbotapi.types.files.PhotoSize
 import dev.inmo.tgbotapi.types.message.ChannelContentMessageImpl
 import dev.inmo.tgbotapi.types.message.CommonGroupContentMessageImpl
@@ -19,8 +21,7 @@ import dev.inmo.tgbotapi.types.message.content.TextContent
 import dev.inmo.tgbotapi.types.message.content.VideoContent
 
 
-val bot = telegramBot("token")
-
+val bot = telegramBot("5896153553:AAF4G3pkEqjy-VkUzj6T0N4uNO37vYlGNkg")
 
 suspend fun messageInGroup() {
     bot.buildBehaviourWithLongPolling {
@@ -31,6 +32,7 @@ suspend fun messageInGroup() {
             val currChatId = getChat(sms.chat).id
             val currChat = getChat(sms.chat)
             val messCont = sms.content
+            val userName = sms.from!!.username!!.username
 
 //            println(sms)
 //            println(messCont)
@@ -77,16 +79,17 @@ suspend fun messageInGroup() {
                         copyMessage(idOfChannelFromGroup!!, currChatId, smsId)
                         deleteMessage(currChatId, smsId)
                     }
-//                    else if(checkPermissions() && sms.mediaGroupId != null){
-//
-//                        println(12412)
-//                        val a = messCont.createResend(currChatId)
+                    else if(checkPermissions() && sms.mediaGroupId != null && idOfChannelFromGroup != null && userName != null){
+
 //                        println(1234)
-//                        val b = executeAsync(a).toString()
-////                        copyMessage(idOfChannelFromGroup!!, currChatId, b)
-////                        deleteMessage(currChatId, b)
-//
-//                    }
+                        val a = messCont.createResend(idOfChannelFromGroup)
+                        sendMessage(currChatId, "$userName")
+                        executeAsync(a)
+//                        println(b)
+//                        copyMessage(idOfChannelFromGroup!!, currChatId, b)
+                        deleteMessage(currChatId, smsId)
+
+                    }
 
 
 //                    else if (sms is MediaGroupContent<PhotoContent>){
