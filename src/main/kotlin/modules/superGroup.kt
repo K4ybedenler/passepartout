@@ -84,6 +84,7 @@ suspend fun messageInGroup() {
 //                        println(1234)
                         val a = messCont.createResend(idOfChannelFromGroup)
                         executeAsync(a)
+
                         // sending username in sme channel
                         sendMessage(currChatId, "$userName")
                         deleteMessage(currChatId, smsId)
@@ -97,11 +98,11 @@ suspend fun messageInGroup() {
                     sendMessage(currChatId, "")
                 }
 
-
                 // other types of Messages
                 else -> {
 
                     sendMessage(currChatId, "")
+                    //12345
                 }
             }
         }
