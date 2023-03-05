@@ -21,7 +21,7 @@ import dev.inmo.tgbotapi.types.message.content.TextContent
 import dev.inmo.tgbotapi.types.message.content.VideoContent
 
 
-val bot = telegramBot("5896153553:AAF4G3pkEqjy-VkUzj6T0N4uNO37vYlGNkg")
+val bot = telegramBot("token")
 
 suspend fun messageInGroup() {
     bot.buildBehaviourWithLongPolling {
@@ -34,9 +34,6 @@ suspend fun messageInGroup() {
             val messCont = sms.content
             val userName = sms.from!!.username!!.username
 
-//            println(sms)
-//            println(messCont)
-
 
             // checking Message type
             when (sms) {
@@ -45,7 +42,8 @@ suspend fun messageInGroup() {
                 is ChannelContentMessageImpl -> {
 
                     if (!(messCont as TextContent).text.contains("1.")
-                        && messCont.text.contains("#баг")) {
+                        && messCont.text.contains("#баг")
+                    ) {
                         deleteMessage(currChatId, smsId)
                     }
                 }
@@ -53,6 +51,7 @@ suspend fun messageInGroup() {
 
                 // Message came to Group
                 is CommonGroupContentMessageImpl -> {
+
 
                     // getting id of linked chat
                     val idOfChannelFromGroup = (currChat).extendedSupergroupChatOrNull()?.linkedChannelChatId
@@ -78,40 +77,33 @@ suspend fun messageInGroup() {
                     if (checkPermissions() && checkMessage() && sms.mediaGroupId == null) {
                         copyMessage(idOfChannelFromGroup!!, currChatId, smsId)
                         deleteMessage(currChatId, smsId)
-                    }
-                    else if(checkPermissions() && sms.mediaGroupId != null && idOfChannelFromGroup != null && userName != null){
+                        // sending username in sme channel
+                        sendMessage(currChatId, "$userName")
+                    } else if (checkPermissions() && sms.mediaGroupId != null && idOfChannelFromGroup != null && userName != null) {
 
 //                        println(1234)
                         val a = messCont.createResend(idOfChannelFromGroup)
-                        sendMessage(currChatId, "$userName")
                         executeAsync(a)
-//                        println(b)
-//                        copyMessage(idOfChannelFromGroup!!, currChatId, b)
+                        // sending username in sme channel
+                        sendMessage(currChatId, "$userName")
                         deleteMessage(currChatId, smsId)
-
                     }
-
-
-//                    else if (sms is MediaGroupContent<PhotoContent>){
-//
-//                        copyMessage(idOfChannelFromGroup!!, currChatId, smsId)
-//                    }
-
                 }
 
 
                 // Message came to Group from connected Channel
                 is ConnectedFromChannelGroupContentMessageImpl -> {
+
                     sendMessage(currChatId, "")
                 }
 
 
                 // other types of Messages
                 else -> {
+
                     sendMessage(currChatId, "")
                 }
             }
-
         }
     }.join()
 }
