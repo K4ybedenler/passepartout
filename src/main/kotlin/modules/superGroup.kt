@@ -102,7 +102,6 @@ suspend fun messageInGroup() {
                 else -> {
 
                     sendMessage(currChatId, "")
-                    //12345
                 }
             }
         }
