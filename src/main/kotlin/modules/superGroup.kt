@@ -21,7 +21,7 @@ import dev.inmo.tgbotapi.types.message.content.TextContent
 import dev.inmo.tgbotapi.types.message.content.VideoContent
 
 
-val bot = telegramBot("5896153553:AAHmgcxA2dwzW22hoYHEzDHbrA6gr5S_rtc")
+val bot = telegramBot("token")
 
 suspend fun messageInGroup() {
     bot.buildBehaviourWithLongPolling {
